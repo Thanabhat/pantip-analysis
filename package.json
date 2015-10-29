@@ -6,6 +6,8 @@
   "author"       : "Thanabhat",
   "dependencies" : {
     "request"    : "latest",
-    "fs"         : "latest"
+    "fs"         : "latest",
+    "mongodb"    : "latest",
+    "async"      : "latest"
   }
 }
