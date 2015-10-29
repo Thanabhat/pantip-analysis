@@ -8,6 +8,7 @@
     "request"    : "latest",
     "fs"         : "latest",
     "mongodb"    : "latest",
-    "async"      : "latest"
+    "async"      : "latest",
+    "mongo-express" :"latest"
   }
 }
