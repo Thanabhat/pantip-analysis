@@ -32,30 +32,35 @@ function crawTopicByRoom(room, pageCount) {
                 form: payload
             };
             console.log('crawTopicByRoom: room=' + room + ', page=' + currentPage);
-            request(options, function(error, response, html) {
+            request(options, function(error, response, json) {
                 var data = null;
                 if(error) {
                     console.log('error in response');
-                    callback(error);
+                    console.log(error);
+                    callback();
+                    return;
                 }
-                if(html) {
-                    data = JSON.parse(html);
+                if(json) {
+                    data = JSON.parse(json);
                     console.log('request success');
                 } else {
-                    console.log('error in data');
+                    console.log('error in json data');
                     callback();
+                    return;
                 }
                 currentPage++;
                 lastIdCurrentPage = data.item.topic[data.item.topic.length - 1]._id;
                 MongoClient.connect(MONGODB_URL, function(err, db) {
                     if(err) {
                         console.log('error in mongodb connect');
-                        callback(err);
+                        console.log(err);
+                        callback();
                     }
                     db.collection('topic', function(err, collection) {
                         if(err) {
                             console.log('error in mongodb collection');
-                            callback(err);
+                            console.log(err);
+                            callback();
                         }
                         async.each(
                             data.item.topic,
@@ -72,9 +77,9 @@ function crawTopicByRoom(room, pageCount) {
                             },
                             function(err) {
                                 if(err) {
-                                    console.log('error in async request');
+                                    console.log('error in async saved');
                                     console.log(err);
-                                    callback(err);
+                                    callback();
                                 }
                                 console.log('saved to database');
                                 setTimeout(callback, TIME_BETWEEN_REQUEST);
