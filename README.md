@@ -1,6 +1,6 @@
 # Pantip Analysis
 
-This project has created on Windows.
+An analysis on http://pantip.com/.  This project has created on Windows.
 
 ## Prerequisite
 - Node.js
