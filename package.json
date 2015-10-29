@@ -4,11 +4,16 @@
   "description"  : "Pantip Analysis",
   "main"         : "server.js",
   "author"       : "Thanabhat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thanabhat/pantip-analysis"
+  },
   "dependencies" : {
     "request"    : "latest",
     "fs"         : "latest",
     "mongodb"    : "latest",
     "async"      : "latest",
     "mongo-express" :"latest"
-  }
+  },
+  "license": "MIT"
 }
