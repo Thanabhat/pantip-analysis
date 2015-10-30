@@ -118,7 +118,10 @@ function process() {
                     throw err;
                 }
                 console.log('file wrote: tags_output.json');
-            })
+            });
+        }).then(function() {
+            db.close();
+            process.exit();
         });
     });
 }

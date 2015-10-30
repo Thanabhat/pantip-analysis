@@ -11,12 +11,15 @@ function MongoClientBatchSave(collection, items, callback) {
             console.log('error in mongodb connect');
             console.log(err);
             callback();
+            return;
         }
         db.collection(collection, function(err, collection) {
             if(err) {
                 console.log('error in mongodb collection');
                 console.log(err);
+                db.close();
                 callback();
+                return;
             }
             async.each(
                 items,
@@ -35,12 +38,13 @@ function MongoClientBatchSave(collection, items, callback) {
                     if(err) {
                         console.log('error in async saved');
                         console.log(err);
+                        db.close();
                         callback();
+                        return;
                     }
                     console.log('saved to database');
-                    if(callback) {
-                        callback();
-                    }
+                    db.close();
+                    callback();
                 }
             );
         });
@@ -52,22 +56,35 @@ function MongoClientSave(collection, item, callback) {
         if(err) {
             console.log('error in mongodb connect');
             console.log(err);
-            callback();
+            if(callback) {
+                callback();
+            }
+            return;
         }
         db.collection(collection, function(err, collection) {
             if(err) {
                 console.log('error in mongodb collection');
                 console.log(err);
-                callback();
+                db.close();
+                if(callback) {
+                    callback();
+                }
+                return;
             }
             collection.save(item, {
                 w: 1
             }, function(err, result) {
                 if(err) {
                     console.log('error in save');
-                    callback2(err);
+                    db.close();
+                    if(callback) {
+                        callback();
+                    }
+                    return;
+
                 }
                 console.log('saved to database');
+                db.close();
                 if(callback) {
                     callback();
                 }
@@ -194,6 +211,6 @@ function crawCommentByTopic(tid) {
 }
 
 // crawTopicByRoom('supachalasai', 100);
-crawTopicByRoom(undefined, 400);
+crawTopicByRoom(undefined, 20);
 // crawCommentByTopic(34359693);
 // crawCommentByTopic(34379026);
