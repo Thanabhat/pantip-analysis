@@ -9,12 +9,12 @@ An analysis on http://pantip.com/.  This project has created on Windows.
 - MongoDB
 
 ## Installation
-1. run 'npm install'
+1. Run 'npm install'
  * If there is a problem on node-gyp moduls, please see more detail at https://github.com/nodejs/node-gyp
 2. Create MongoDB on 'mongodb\data'
-3. run 'start_mongodb.bat'
-4. (Optional) run 'start_mongo-express.bat' for MongoDB web client
-5. (Optional) craw new data and insert to database
- 1. run 'node server\craw.js' to craw data and insert to database
- 2. run 'node server\process.js' to process the data
-6. run 'node server\server.js'
+3. (Optional) craw new data and insert to database
+ 1. Run 'start_mongodb.bat'
+ 2. (Optional) run 'start_mongo-express.bat' for MongoDB web client
+ 3. run 'node server\craw.js' to craw data and insert to database
+ 4. run 'node server\process.js' to process the data
+4. run 'node server\server.js'
