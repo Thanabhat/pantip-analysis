@@ -18,3 +18,4 @@ An analysis on http://pantip.com/.  This project has created on Windows.
  4. Run 'node server\craw.js' to craw data and insert to database
  5. Run 'node server\process.js' to process the data
 3. Run 'node server\server.js'
+4. open 'http://localhost:8082/'

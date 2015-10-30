@@ -2,7 +2,7 @@
   "name"         : "pantip-analysis",
   "version"      : "0.0.1",
   "description"  : "Pantip Analysis",
-  "main"         : "server.js",
+  "main"         : "server\\server.js",
   "author"       : "Thanabhat",
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
     "fs"         : "latest",
     "mongodb"    : "latest",
     "async"      : "latest",
-    "mongo-express" :"latest"
+    "mongo-express" :"latest",
+    "express"    : "latest"
   },
   "license": "MIT"
 }
