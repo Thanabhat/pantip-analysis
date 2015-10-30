@@ -112,12 +112,12 @@ function process() {
             });
 
             console.log('processing done');
-            fs.writeFile('tags_output.json', JSON.stringify(resultArr), function(err) {
+            fs.writeFile('output\\tags_output.json', JSON.stringify(resultArr), function(err) {
                 if(err) {
                     console.log('can not write file');
                     throw err;
                 }
-                console.log('file wrote: tags_output.json');
+                console.log('file wrote: output\\tags_output.json');
             });
         }).then(function() {
             db.close();

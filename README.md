@@ -14,4 +14,7 @@ An analysis on http://pantip.com/.  This project has created on Windows.
 2. Create MongoDB on 'mongodb\data'
 3. run 'start_mongodb.bat'
 4. (Optional) run 'start_mongo-express.bat' for MongoDB web client
-5. run 'node server.js'
+5. (Optional) craw new data and insert to database
+ 1. run 'node server\craw.js' to craw data and insert to database
+ 2. run 'node server\process.js' to process the data
+6. run 'node server\server.js'
