@@ -63,9 +63,9 @@ function drawGraph() {
         .attr("height", height);
 
     var force = d3.layout.force()
-        .gravity(.05)
-        .distance(100)
-        .charge(-100)
+        .gravity(.03)
+        .distance(110)
+        .charge(-110)
         .size([width, height]);
 
     json = graphData;
@@ -80,7 +80,7 @@ function drawGraph() {
         .enter().append("line")
         .attr("class", "link")
         .style("stroke-width", function(d) {
-            return Math.pow(d.weight, 1/2.5);
+            return Math.pow(d.weight, 1/2.2);
         });
 
     var node = svg.selectAll(".node")
@@ -91,7 +91,7 @@ function drawGraph() {
 
     node.append("circle")
     	.attr("r", function(d){
-            return Math.pow(d.size, 1/2.5);
+            return Math.pow(d.size, 1/2.2);
     	});
 
     node.append("text")
