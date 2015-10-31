@@ -1,8 +1,11 @@
 var tagsData = null;
 var graphData = null;
 var tagToIndex = null;
-var MAX_TAG = 50;
+
+var MAX_TAG = 80;
 var MAX_LINK = 20;
+
+
 
 $(window).load(function() {
     $.ajax({
@@ -23,7 +26,8 @@ function processData() {
     for(var i = 0; i < tagsData.length && i < MAX_TAG; i++) {
         graphData.nodes.push({
             name: tagsData[i].tag,
-            group: 1
+            group: 1,
+            size: tagsData[i].count
         });
         tagToIndex[tagsData[i].tag] = i;
     }
@@ -44,15 +48,15 @@ function processData() {
             graphData.links.push({
                 source: tag1Ind,
                 target: tag2Ind,
-                value: link.linkCount
+                weight: link.linkCount
             });
         }
     }
 }
 
 function drawGraph() {
-    var width = 960,
-        height = 500
+    var width = 1280,
+        height = 720
 
     var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -76,7 +80,7 @@ function drawGraph() {
         .enter().append("line")
         .attr("class", "link")
         .style("stroke-width", function(d) {
-            return Math.sqrt(d.weight);
+            return Math.pow(d.weight, 1/2.5);
         });
 
     var node = svg.selectAll(".node")
@@ -86,7 +90,9 @@ function drawGraph() {
         .call(force.drag);
 
     node.append("circle")
-        .attr("r", "5");
+    	.attr("r", function(d){
+            return Math.pow(d.size, 1/2.5);
+    	});
 
     node.append("text")
         .attr("dx", 12)
