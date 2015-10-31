@@ -2,10 +2,9 @@ var tagsData = null;
 var graphData = null;
 var tagToIndex = null;
 
-var MAX_TAG = 80;
-var MAX_LINK = 20;
-
-
+var MAX_TAG = 100;
+var MAX_LINK = 25;
+var MIN_LINK_COUNT_TO_SHOW = 2;
 
 $(window).load(function() {
     $.ajax({
@@ -45,6 +44,9 @@ function processData() {
             if(tag1Ind > tag2Ind) {
                 continue;
             }
+            if(link.linkCount < MIN_LINK_COUNT_TO_SHOW) {
+                continue;
+            }
             graphData.links.push({
                 source: tag1Ind,
                 target: tag2Ind,
@@ -64,8 +66,8 @@ function drawGraph() {
 
     var force = d3.layout.force()
         .gravity(.03)
-        .distance(110)
-        .charge(-110)
+        .distance(120)
+        .charge(-120)
         .size([width, height]);
 
     json = graphData;
@@ -80,7 +82,7 @@ function drawGraph() {
         .enter().append("line")
         .attr("class", "link")
         .style("stroke-width", function(d) {
-            return Math.pow(d.weight, 1/2.2);
+            return Math.pow(d.weight, 1 / 2.2);
         });
 
     var node = svg.selectAll(".node")
@@ -90,9 +92,9 @@ function drawGraph() {
         .call(force.drag);
 
     node.append("circle")
-    	.attr("r", function(d){
-            return Math.pow(d.size, 1/2.2);
-    	});
+        .attr("r", function(d) {
+            return Math.pow(d.size, 1 / 2.2);
+        });
 
     node.append("text")
         .attr("dx", 12)
