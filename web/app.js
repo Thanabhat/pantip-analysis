@@ -69,11 +69,10 @@ function drawGraph() {
     var force = d3.layout.force()
         .gravity(.04)
         .distance(function(d) {
-            var distance = -Math.log(d.weight/maxWeight+0.0001)-0.1;
-            distance = Math.max(distance,0.5);
-            distance = Math.min(distance,7);
+            var distance = -Math.log(d.weight / maxWeight + 0.0001) - 0.1;
+            distance = Math.max(distance, 0.5);
+            distance = Math.min(distance, 7);
             distance *= 35;
-            console.log(d.weight, distance)
             return distance;
         })
         .charge(-180)
@@ -131,3 +130,95 @@ function drawGraph() {
         });
     });
 }
+
+/* Longest Path Analysis */
+
+var adjList = {};
+var nodeList = [];
+
+function createAdjList() {
+    // console.log(graphData);
+    var maxWeight = tagsData[0].link[0].linkCount;
+    for(var i = 0; i < graphData.nodes.length; i++) {
+        adjList[graphData.nodes[i].name] = [];
+    }
+    for(var i = 0; i < graphData.links.length; i++) {
+        var distance = -Math.log(graphData.links[i].weight / maxWeight + 0.0001) + 0.1;
+        adjList[graphData.links[i].source.name].push({
+            tag: graphData.links[i].target.name,
+            distance: distance
+        });
+        adjList[graphData.links[i].target.name].push({
+            tag: graphData.links[i].source.name,
+            distance: distance
+        });
+    }
+    // console.log(adjList);
+    nodeList = Object.keys(adjList);
+    // console.log(nodeList);
+}
+
+function findDistanceByHop(tagName) {
+    var visited = {};
+    var q = [];
+    q.push({
+        tag: tagName,
+        distance: 0
+    });
+    while(q.length > 0) {
+        var tagObj = q.shift();
+        var tag = tagObj.tag;
+        var distance = tagObj.distance;
+        console.log(tag, tagObj.distance);
+        visited[tag] = true;
+        if(adjList[tag]) {
+            for(var i = 0; i < adjList[tag].length; i++) {
+                if(!visited[adjList[tag][i].tag]) {
+                    q.push({
+                        tag: adjList[tag][i].tag,
+                        distance: distance + 1
+                    });
+                }
+            }
+        }
+    }
+}
+
+function findDistanceByWeight(tagName) {
+    var INFINITY = 10000000;
+    var visited = {};
+    var distance = {};
+    for(var i = 0; i < nodeList.length; i++) {
+        distance[nodeList[i]] = INFINITY;
+    }
+    distance[tagName] = 0;
+    var isAvailable = true;
+    while(Object.keys(visited).length < nodeList.length) {
+        var tag = undefined;
+        for(var i = 0; i < nodeList.length; i++) {
+            if(!visited[nodeList[i]]) {
+                if(!tag || distance[tag] > distance[nodeList[i]]) {
+                    tag = nodeList[i];
+                }
+            }
+        }
+        if(!tag) {
+            break;
+        }
+        console.log(tag, distance[tag]);
+        visited[tag] = true;
+        if(adjList[tag]) {
+            for(var i = 0; i < adjList[tag].length; i++) {
+                if(!visited[adjList[tag][i].tag]) {
+                    distance[adjList[tag][i].tag] = distance[tag] + adjList[tag][i].distance;
+                }
+            }
+        }
+    }
+}
+
+setTimeout(function() {
+    createAdjList();
+    // findDistanceByHop('วิทยาศาสตร์');
+    findDistanceByWeight('วิทยาศาสตร์');
+}, 1000);
