@@ -211,6 +211,6 @@ function crawCommentByTopic(tid) {
 }
 
 // crawTopicByRoom('supachalasai', 100);
-crawTopicByRoom(undefined, 20);
+crawTopicByRoom(undefined, 1000);
 // crawCommentByTopic(34359693);
 // crawCommentByTopic(34379026);

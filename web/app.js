@@ -3,8 +3,8 @@ var graphData = null;
 var tagToIndex = null;
 
 var MAX_TAG = 100;
-var MAX_LINK = 25;
-var MIN_LINK_COUNT_TO_SHOW = 2;
+var MAX_LINK = 27;
+var MIN_LINK_COUNT_TO_SHOW = 5;
 
 $(window).load(function() {
     $.ajax({
@@ -57,17 +57,26 @@ function processData() {
 }
 
 function drawGraph() {
-    var width = 1280,
-        height = 720
+    var maxWeight = tagsData[0].link[0].linkCount;
+
+    var width = 1920,
+        height = 1080
 
     var svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
     var force = d3.layout.force()
-        .gravity(.03)
-        .distance(120)
-        .charge(-120)
+        .gravity(.04)
+        .distance(function(d) {
+            var distance = -Math.log(d.weight/maxWeight+0.0001)-0.1;
+            distance = Math.max(distance,0.5);
+            distance = Math.min(distance,7);
+            distance *= 35;
+            console.log(d.weight, distance)
+            return distance;
+        })
+        .charge(-180)
         .size([width, height]);
 
     json = graphData;
@@ -97,8 +106,8 @@ function drawGraph() {
         });
 
     node.append("text")
-        .attr("dx", 12)
-        .attr("dy", ".35em")
+        .attr("dx", "-12px")
+        .attr("dy", "5px")
         .text(function(d) {
             return d.name
         });
