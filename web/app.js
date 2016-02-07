@@ -7,12 +7,15 @@ var MAX_LINK = 27;
 var MIN_LINK_COUNT_TO_SHOW = 5;
 
 $(window).load(function() {
+    NProgress.start();
     $.ajax({
         url: "getTagsData"
     }).done(function(data) {
+        NProgress.inc();
         tagsData = data;
         processData();
         drawGraph();
+        NProgress.done();
     });
 });
 
@@ -59,8 +62,8 @@ function processData() {
 function drawGraph() {
     var maxWeight = tagsData[0].link[0].linkCount;
 
-    var width = 1920,
-        height = 1080
+    var width =  document.body.clientWidth || window.innerWidth,
+        height =  document.body.clientHeight || window.innerHeight;
 
     var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -72,7 +75,7 @@ function drawGraph() {
             var distance = -Math.log(d.weight / maxWeight + 0.0001) - 0.1;
             distance = Math.max(distance, 0.5);
             distance = Math.min(distance, 7);
-            distance *= 35;
+            distance *= 20;
             return distance;
         })
         .charge(-180)
