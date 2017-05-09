@@ -9,7 +9,7 @@ var MIN_LINK_COUNT_TO_SHOW = 5;
 $(window).load(function() {
     NProgress.start();
     $.ajax({
-        url: "getTagsData"
+        url: "output/tags_output_small.json"
     }).done(function(data) {
         NProgress.inc();
         tagsData = data;
@@ -220,8 +220,8 @@ function findDistanceByWeight(tagName) {
     }
 }
 
-setTimeout(function() {
-    createAdjList();
-    // findDistanceByHop('วิทยาศาสตร์');
-    findDistanceByWeight('วิทยาศาสตร์');
-}, 1000);
+// setTimeout(function() {
+//     createAdjList();
+//     // findDistanceByHop('วิทยาศาสตร์');
+//     findDistanceByWeight('วิทยาศาสตร์');
+// }, 1000);
