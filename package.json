@@ -13,8 +13,7 @@
     "fs"         : "latest",
     "mongodb"    : "latest",
     "async"      : "latest",
-    "mongo-express" :"latest",
-    "express"    : "latest"
+    "mongo-express" :"latest"
   },
   "license": "MIT"
 }
