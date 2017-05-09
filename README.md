@@ -1,5 +1,7 @@
 # Pantip Analysis
 
+[Demo on GitHub Page](https://thanabhat.github.io/pantip-analysis/)
+
 An analysis on http://pantip.com/.  This project has created on Windows.
 
 ## Prerequisite
@@ -17,5 +19,4 @@ An analysis on http://pantip.com/.  This project has created on Windows.
  3. (Optional) Run 'start_mongo-express.bat' for MongoDB web client
  4. Run 'node server\craw.js' to craw data and insert to database
  5. Run 'node server\process.js' to process the data
-3. Run 'node server\server.js'
-4. open 'http://localhost:8082/'
+3. Run your local web server and open index.html
